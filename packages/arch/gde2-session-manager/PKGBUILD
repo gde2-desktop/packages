@@ -1,0 +1,33 @@
+# Maintainer: Brad Fanella <cesura@archlinux.org>
+# Contributor: Martin Wimpress <code@flexion.org>
+
+pkgname=gde2-session-manager
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="The GnuDE2 Session Handler"
+url="https://mate-desktop.org"
+arch=('x86_64')
+license=('GPL')
+depends=('dbus-glib' 'gettext' 'gtk2' 'libsm' 'gde2-desktop')
+makedepends=('xtrans')
+optdepends=('gnome-keyring: keyring support'
+            'xdg-user-dirs-gtk: manage user directories')
+groups=('gde2')
+source=("https://github.com/gde2-desktop/gde2-session-manager/archive/master.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    	cd "${pkgname}-master"
+    	./autogen.sh \
+        	--prefix=/usr \
+        	--libexecdir=/usr/lib/${pkgname} \
+        	--sysconfdir=/etc \
+        	--localstatedir=/var \
+        	--disable-upower
+    	make
+}
+
+package() {
+    	cd "${pkgname}-master"
+    	make DESTDIR="${pkgdir}" install
+}
