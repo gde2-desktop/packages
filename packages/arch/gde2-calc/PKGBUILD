@@ -1,0 +1,27 @@
+# Maintainer: Brad Fanella <cesura@archlinux.org>
+# Contributor: Martin Wimpress <code@flexion.org>
+
+pkgname=gde2-calc
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Calculator for the GDE2 desktop environment"
+url="https://gde2-desktop.github.io"
+arch=('x86_64')
+license=('GPL')
+depends=('gtk2' 'gettext')
+makedepends=('itstool')
+groups=('gde2-extra')
+source=("https://github.com/gde2-desktop/gde2-calc/archive/master.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    	cd "${pkgname}-master"
+   	./autogen.sh \
+        	--prefix=/usr
+    	make
+}
+
+package() {
+    	cd "${pkgname}-master"
+    	make DESTDIR="${pkgdir}" install
+}
